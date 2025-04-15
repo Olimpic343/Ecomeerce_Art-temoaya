@@ -1,0 +1,238 @@
+<header class="header-2">
+    <div class="header-notification theme-bg-color overflow-hidden py-2">
+
+
+
+        <div class="notification-slider">
+            <div>
+                <div class="timer-notification text-center">
+                    <h6><strong class="me-1">Bienvenido a ArtTemoaya</strong>nuevas ofertas y regalos.<strong class="ms-1">New Coupon Code: Fast024
+                        </strong>
+                    </h6>
+                </div>
+            </div>
+
+            <div>
+                <div class="timer-notification text-center">
+                    <h6>Something you love is now on sale!<a href="shop-left-sidebar.html" class="text-white">Buy
+                            Now
+                            !</a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <button class="btn close-notification"><span>Close</span> <i class="fas fa-times"></i></button>
+    </div>
+
+
+
+    <div class="top-nav top-header sticky-header sticky-header-3">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="navbar-top">
+                        <button class="navbar-toggler d-xl-none d-block p-0 me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
+                            <span class="navbar-toggler-icon">
+                                <i class="iconly-Category icli theme-color"></i>
+                            </span>
+                        </button>
+                        <a href="index.html" class="web-logo nav-logo">
+                            <img src="../assets/images/logo/3.png" class="img-fluid blur-up lazyload" alt="">
+                        </a>
+
+                        <div class="search-full">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i data-feather="search" class="font-light"></i>
+                                </span>
+                                <input type="text" class="form-control search-type" placeholder="Search here..">
+                                <span class="input-group-text close-search">
+                                    <i data-feather="x" class="font-light"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="middle-box">
+                            <div class="center-box">
+                                <div class="searchbar-box order-xl-1 d-none d-xl-block">
+                                    <input type="search" class="form-control" id="exampleFormControlInput1" placeholder="search for product, delivered to your door...">
+                                    <button class="btn search-button">
+                                        <i class="iconly-Search icli"></i>
+                                    </button>
+                                </div>
+                                <div class="location-box-2">
+                                    <button class="btn location-button" data-bs-toggle="modal" data-bs-target="#locationModal">
+                                        <i class="iconly-Location icli"></i>
+                                        <span class="locat-name">Your Location</span>
+                                        <i class="fa-solid fa-angle-down down-arrow"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rightside-menu">
+                            <div class="dropdown-dollar">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                                        <span>Language</span> <i class="fa-solid fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a id="eng" class="dropdown-item" href="javascript:void(0)">English</a>
+                                        </li>
+                                        <li>
+                                            <a id="hin" class="dropdown-item" href="javascript:void(0)">Hindi</a>
+                                        </li>
+                                        <li>
+                                            <a id="guj" class="dropdown-item" href="javascript:void(0)">Gujarati</a>
+                                        </li>
+                                        <li>
+                                            <a id="arb" class="dropdown-item" href="javascript:void(0)">Arabic</a>
+                                        </li>
+                                        <li>
+                                            <a id="rus" class="dropdown-item" href="javascript:void(0)">Russia</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="javascript:void(0)">Chinese</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle m-0" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown">
+                                        <span>Dollar</span> <i class="fa-solid fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a id="usd" class="dropdown-item" href="javascript:void(0)">USD</a>
+                                        </li>
+                                        <li>
+                                            <a id="inr" class="dropdown-item" href="javascript:void(0)">INR</a>
+                                        </li>
+                                        <li>
+                                            <a id="eur" class="dropdown-item" href="javascript:void(0)">EUR</a>
+                                        </li>
+                                        <li>
+                                            <a id="aud" class="dropdown-item" href="javascript:void(0)">AUD</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="option-list">
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)" class="header-icon user-icon search-icon">
+                                            <i class="iconly-Profile icli"></i>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="javascript:void(0)" class="header-icon search-box search-icon">
+                                            <i class="iconly-Search icli"></i>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="compare.html" class="header-icon">
+                                            <small class="badge-number">2</small>
+                                            <i class="iconly-Swap icli"></i>
+                                        </a>
+                                    </li>
+
+                                    <li class="onhover-dropdown">
+                                        <a href="javascript:void(0)" class="header-icon swap-icon">
+                                            <i class="iconly-Heart icli"></i>
+                                        </a>
+
+                                    </li>
+
+                                    <li class="onhover-dropdown">
+                                        <a href="cart.html" class="header-icon bag-icon">
+                                            <small class="badge-number">2</small>
+                                            <i class="iconly-Bag-2 icli"></i>
+                                        </a>
+                                        <div class="onhover-div">
+                                            <ul class="cart-list">
+                                                <li>
+                                                    <div class="drop-cart">
+                                                        <a href="product-left-thumbnail.html" class="drop-image">
+                                                            <img src="../assets/images/vegetable/product/1.png" class="blur-up lazyload" alt="">
+                                                        </a>
+
+                                                        <div class="drop-contain">
+                                                            <a href="product-left-thumbnail.html">
+                                                                <h5>Fantasy Crunchy Choco Chip Cookies</h5>
+                                                            </a>
+                                                            <h6><span>1 x</span> $80.58</h6>
+                                                            <button class="close-button">
+                                                                <i class="fa-solid fa-xmark"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="drop-cart">
+                                                        <a href="product-left-thumbnail.html" class="drop-image">
+                                                            <img src="../assets/images/vegetable/product/2.png" class="blur-up lazyload" alt="">
+                                                        </a>
+
+                                                        <div class="drop-contain">
+                                                            <a href="product-left-thumbnail.html">
+                                                                <h5>Peanut Butter Bite Premium Butter Cookies 600 g
+                                                                </h5>
+                                                            </a>
+                                                            <h6><span>1 x</span> $25.68</h6>
+                                                            <button class="close-button">
+                                                                <i class="fa-solid fa-xmark"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+
+                                            <div class="price-box">
+                                                <h5>Price :</h5>
+                                                <h4 class="theme-color fw-bold">$106.58</h4>
+                                            </div>
+
+                                            <div class="button-group">
+                                                <a href="cart.html" class="btn btn-sm cart-button">View Cart</a>
+                                                <a href="checkout.html" class="btn btn-sm cart-button theme-bg-color
+                                                text-white">Checkout</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid-lg">
+        <div class="row">
+            <div class="col-12">
+                <div class="main-nav">
+
+
+                    <div class="right-nav">
+                        <div class="nav-number">
+                            <img src="../assets/images/icon/music.png" class="img-fluid blur-up lazyload" alt="">
+                            <span>(123) 456 7890</span>
+                        </div>
+                        <a href="javascript:void(0)" class="btn theme-bg-color ms-3 fire-button" data-bs-toggle="modal" data-bs-target="#deal-box">
+                            <div class="fire">
+                                <img src="../assets/images/icon/hot-sale.png" class="img-fluid" alt="">
+                            </div>
+                            <span>Hot Deals</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
