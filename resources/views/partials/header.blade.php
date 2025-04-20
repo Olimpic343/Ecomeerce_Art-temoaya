@@ -27,6 +27,7 @@
 
 
 
+
     <div class="top-nav top-header sticky-header sticky-header-3">
         <div class="container-fluid-lg">
             <div class="row">
@@ -37,7 +38,7 @@
                                 <i class="iconly-Category icli theme-color"></i>
                             </span>
                         </button>
-                        <a href="index.html" class="web-logo nav-logo">
+                        <a href="{{ route('home') }}" class="web-logo nav-logo">
                             <img src="{{ asset ('assets/images/logo/art_logo.png')}}" class="img-fluid blur-up lazyload" alt="">
                         </a>
 
