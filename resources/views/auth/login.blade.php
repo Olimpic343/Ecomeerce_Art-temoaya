@@ -1,47 +1,109 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.app')
+@section('title', 'Iniciar Sesion')
+@section('content')
+        <section class="breadcrumb-section pt-0">
+            <div class="container-fluid-lg">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumb-contain">
+                            <h2 class="mb-2">Iniciar Sesión</h2>
+                            <nav>
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="index.html">
+                                            <i class="fa-solid fa-house"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Iniciar Sesión</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        <section class="log-in-section background-image-2 section-b-space">
+            <div class="container-fluid-lg w-100">
+                <div class="row">
+                    <!-- Imagen lateral (solo en pantallas grandes) -->
+                    <div class="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
+                        <div class="image-contain">
+                            <img src="{{ asset('assets/images/inner-page/log-in.png') }}" class="img-fluid" alt="Inicia sesión en Art-Temoaya">
+                        </div>
+                    </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+                    <!-- Formulario de inicio de sesión -->
+                    <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
+                        <div class="log-in-box">
+                            <div class="log-in-title text-center">
+                                <h3>Bienvenido a ArtTemoaya</h3>
+                                <h4>Inicia sesión en tu cuenta</h4>
+                            </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+                            <!-- Mostrar errores de validación -->
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+                            <div class="input-box">
+                                <form method="POST" action="{{ route('login') }}" class="row g-4">
+                                    @csrf
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+                                    <!-- Email -->
+                                    <div class="col-12">
+                                        <div class="form-floating theme-form-floating log-in-form">
+                                            <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}" placeholder="Correo electrónico" required autofocus>
+                                            <label for="email">Correo electrónico</label>
+                                        </div>
+                                    </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+                                    <!-- Contraseña -->
+                                    <div class="col-12">
+                                        <div class="form-floating theme-form-floating log-in-form">
+                                            <input type="password" name="password" class="form-control" id="password" placeholder="Contraseña" required>
+                                            <label for="password">Contraseña</label>
+                                        </div>
+                                    </div>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+                                    <!-- Recordarme y contraseña olvidada -->
+                                    <div class="col-12">
+                                        <div class="forgot-box d-flex justify-content-between align-items-center">
+                                            <div class="form-check ps-0 m-0 remember-box">
+                                                <input class="checkbox_animated check-box" type="checkbox" name="remember" id="remember">
+                                                <label class="form-check-label" for="remember">Recordarme</label>
+                                            </div>
+                                            <a href="{{ route('password.request') }}" class="forgot-password small text-muted">¿Olvidaste tu contraseña?</a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Botón iniciar sesión -->
+                                    <div class="col-12">
+                                        <button class="btn btn-animation w-100 justify-content-center" type="submit">
+                                            Iniciar sesión
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Registro -->
+                            <div class="sign-up-box text-center mt-4">
+                                <h4>¿No tienes una cuenta?</h4>
+                                <a href="{{ route('register') }}" class="theme-color">Crear una cuenta</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+@endsection
+
+
