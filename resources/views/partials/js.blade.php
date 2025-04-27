@@ -29,3 +29,5 @@
 <script src="../assets/js/script.js"></script>
 <!-- Configuración dinámica del tema (colores, layout, etc.) -->
 <script src="../assets/js/theme-setting.js"></script>
+
+

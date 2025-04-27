@@ -2,6 +2,55 @@
 
 <footer class="section-t-space footer-section-2">
     <div class="container-fluid-lg">
+
+        <div class="service-section">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="service-contain">
+
+                        <div class="service-box">
+                            <div class="service-image">
+                                <img src="../assets/svg/product.svg" class="blur-up lazyload" alt="Productos frescos">
+                            </div>
+                            <div class="service-detail">
+                                <h5>Productos siempre Nuevos</h5>
+                            </div>
+                        </div>
+
+                        <div class="service-box">
+                            <div class="service-image">
+                                <img src="../assets/svg/delivery.svg" class="blur-up lazyload" alt="Entrega gratuita">
+                            </div>
+                            <div class="service-detail">
+                                <h5>Envío gratis en pedidos superiores a $300</h5>
+                            </div>
+                        </div>
+
+                        <div class="service-box">
+                            <div class="service-image">
+                                <img src="../assets/svg/discount.svg" class="blur-up lazyload" alt="Descuentos diarios">
+                            </div>
+                            <div class="service-detail">
+                                <h5>Descuentos Especiales Todos los dias</h5>
+                            </div>
+                        </div>
+
+                        <div class="service-box">
+                            <div class="service-image">
+                                <img src="../assets/svg/market.svg" class="blur-up lazyload" alt="Mejores precios">
+                            </div>
+                            <div class="service-detail">
+                                <h5>Los mejores precios del mercado</h5>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
         <div class="main-footer">
             <div class="row g-md-4 gy-sm-5 gy-2">
                 <div class="col-xxl-3 col-xl-4 col-sm-6">

@@ -60,4 +60,17 @@ class User extends Authenticatable
     {
         return $this->hasMany(ShippingAddress::class);
     }
+
+
+    public function hasPurchasedProduct($productId)
+    {
+        return \App\Models\Order::where('user_id', $this->id)
+            ->where('status', 'paid')
+            ->whereHas('orderItems', function ($query) use ($productId) {
+                $query->where('product_id', $productId);
+            })
+            ->exists();
+    }
+
+
 }

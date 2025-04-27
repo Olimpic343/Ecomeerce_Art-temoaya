@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -60,5 +62,26 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    public function details($id, $slug)
+    {
+        $product = Product::where('id', $id)
+                          ->where('slug', $slug)
+                          ->firstOrFail();
+
+         $topSellingProducts = $this->getTopSellingProducts(6);
+
+        return view('products.details', compact('product', 'topSellingProducts'));
+    }
+
+
+    public function getTopSellingProducts($limit = 6){
+
+        return Product::withCount('orderItems')
+        ->orderBy('order_items_count')
+        ->take($limit)
+        ->get();
     }
 }

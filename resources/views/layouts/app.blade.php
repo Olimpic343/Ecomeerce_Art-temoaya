@@ -1,5 +1,4 @@
 
-
         <!DOCTYPE html>
 <html lang="en">
 
@@ -454,6 +453,8 @@
 
     <!-- latest jquery-->
     @include('partials.js')
+
+    <script src="{{ asset('js/cart.js') }}"></script>
 </body>
 
 </html>
