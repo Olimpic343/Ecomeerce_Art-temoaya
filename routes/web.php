@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\WishlistController;
+
 
 Route::get('/',[HomeController::class, 'index'])->name('home');
 
@@ -23,5 +25,9 @@ Route::get('/producto/{id}', [ProductController::class, 'show'])->name('product.
 Route::get('/{id}/{slug}', [ProductController::class, 'details'])->name('product.details');
 
 Route::post('/review/', [ReviewController::class, 'store'])->middleware('auth')->name('reviews.store');
+
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+
+
 
 require __DIR__.'/auth.php';
