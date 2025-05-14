@@ -46,6 +46,21 @@ function updateWishlistCount() {
 
 
 
+
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cartElement = document.getElementById("cart-count-uno");
+     let cartElement2 = document.getElementById("cart-count-dos");
+
+    if (cartElement) {
+        cartElement.textContent = cart.length;
+        cartElement2.textContent = cart.length;
+    }
+}
+
+
+
+
 // Función para agregar al carrito
 function addToCart(productId, imageUrl, url, price, name) {
     let quantity = parseInt(document.getElementById(`qty-${productId}`).value) || 1;
@@ -68,6 +83,7 @@ function addToCart(productId, imageUrl, url, price, name) {
 
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCartCount(); // Asegúrate de actualizar el contador si tienes uno
+    updateCartTotal();
     updateCartDropdown(); // Actualiza el dropdown del carrito si lo tienes
     alert("Producto agregado al carrito");
 }
@@ -308,16 +324,43 @@ function updateWishlistCount() {
 
 
 
+
+
 // Función para actualizar el total general del carrito
 function updateCartTotal() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+     let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let subtotal = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
     let shipping = cart.length > 0 ? 6.9 : 0; // Agregar envío si hay productos
     let total = subtotal + shipping;
 
-    document.getElementById("subtotal").textContent = `$ ${subtotal.toFixed(2)}`;
-    document.getElementById("total").textContent = `$ ${total.toFixed(2)}`;
+    // Guardar total en LocalStorage para usarlo en cualquier vista
+    localStorage.setItem("cartTotal", total.toFixed(2));
 
+    // Actualizar en la vista si existen los elementos
+    if (document.getElementById("subtotal")) {
+        document.getElementById("subtotal").textContent = `$ ${subtotal.toFixed(
+            2
+        )}`;
+    }
+    if (document.getElementById("total")) {
+        document.getElementById("total").textContent = `$ ${total.toFixed(2)}`;
+    }
+    if (document.getElementById("total-uno")) {
+        document.getElementById("total-uno").textContent = `$ ${total.toFixed(2)}`;
+    }
+    if (document.getElementById("cart-dropdown-total")) {
+        document.getElementById("cart-dropdown-total").textContent = `$ ${total.toFixed(2)}`;
+    }
+}
+
+
+
+// Función para obtener el total del carrito desde localStorage
+function getCartTotal() {
+    return localStorage.getItem("cartTotal") || '0.00';
 
 }
 
@@ -327,7 +370,64 @@ function removeFromCart(productId) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     cart = cart.filter(i => i.id !== productId);
     localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
     loadCart();
     updateCartTotal();
+}
+
+
+function updateCartDropdown() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cartDropdown = document.getElementById("cart-dropdown");
+    let cartTotalElement = document.getElementById("cart-dropdown-total");
+
+    if (!cartDropdown || !cartTotalElement) return;
+
+    if (cart.length === 0) {
+        cartDropdown.innerHTML =
+            "<li class='text-center'>Tu carrito está vacío.</li>";
+        cartTotalElement.textContent = "$ 0.00";
+        return;
+    }
+
+    let htmlContent = "";
+    let total = 0;
+
+    cart.forEach((item) => {
+        let itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        htmlContent += `
+            <li class="product-box-contain">
+                <div class="drop-cart">
+                    <a href="${item.url}" class="drop-image">
+                        <img src="${
+                            item.image
+                        }" class="blur-up lazyload" alt="${
+            item.name
+        }" style="width: 50px; height: 50px; object-fit: cover;">
+                    </a>
+
+                    <div class="drop-contain">
+                        <a href="${item.url}">
+                            <h5 class="text-truncate" style="max-width: 150px;">${
+                                item.name
+                            }</h5>
+                        </a>
+                        <h6><span>${item.quantity} x</span> $ ${parseFloat(
+            item.price
+        ).toFixed(2)}</h6>
+                        <button class="close-button close_button" onclick="removeFromCart(${
+                            item.id
+                        }, true)">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        `;
+    });
+
+    cartDropdown.innerHTML = htmlContent;
 }
 
