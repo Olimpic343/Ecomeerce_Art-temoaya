@@ -84,16 +84,17 @@
 
 
 
-                                    <li class="onhover-dropdown">
-                                        <a href="{{ route('wishlist.index') }}" class="header-icon swap-icon">
+                                    <li class="onhover-dropdown position-relative">
+                                        <a href="{{ route('wishlist.index') }}" class="header-icon swap-icon position-relative">
                                             <i class="iconly-Heart icli"></i>
+                                            <small id="wishlist-count" class="badge-number badge bg-theme position-absolute top-0 start-100 translate-middle">0</small>
                                         </a>
-
                                     </li>
 
+
                                     <li class="onhover-dropdown">
-                                        <a href="cart.html" class="header-icon bag-icon">
-                                            <small class="badge-number">2</small>
+                                        <a href="{{ route('cart.index') }}" class="header-icon bag-icon">
+                                            <small id="cart-count-uno" class="badge-number">2</small>
                                             <i class="iconly-Bag-2 icli"></i>
                                         </a>
                                         <div class="onhover-div">
@@ -143,8 +144,9 @@
                                             </div>
 
                                             <div class="button-group">
-                                                <a href="cart.html" class="btn btn-sm cart-button">View Cart</a>
-                                                <a href="checkout.html" class="btn btn-sm cart-button theme-bg-color
+                                                <a href="{{ route('cart.index') }}" class="btn btn-sm cart-button">View Cart</a>
+
+                                                <a href="cart.index" class="btn btn-sm cart-button theme-bg-color
                                                 text-white">Checkout</a>
                                             </div>
                                         </div>

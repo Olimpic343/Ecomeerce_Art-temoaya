@@ -100,10 +100,6 @@
                                    onclick="addToCart({{ $product->id }}, '{{ asset('storage/' . $product->image) }}', '{{ route('product.details', [$product->id, $product->slug]) }}', '{{ $product->price }}', '{{ addslashes($product->name) }}')">
                                    Agregar al Carrito
                                     </button>
-
-
-
-
                             </div>
 
                             <div class="buy-box">

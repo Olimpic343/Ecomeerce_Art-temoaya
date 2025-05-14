@@ -3,9 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
     loadWishlist();
     updateWishlistCount(); // Actualizar la cantidad de productos en la wishlist al cargar la página
     updateCartCount();
-    updateCartTotal();
-    updateCartCount();
     updateCartDropdown();
+    updateCartTotal();
 });
 
 // Función para actualizar la cantidad en carrito y wishlist
@@ -30,6 +29,9 @@ function updateQuantity(productId, action) {
     updateCartTotal();
 }
 
+
+
+
 // Función para actualizar el contador de wishlist en el icono del header
 function updateWishlistCount() {
     let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
@@ -43,36 +45,33 @@ function updateWishlistCount() {
 }
 
 
+
 // Función para agregar al carrito
 function addToCart(productId, imageUrl, url, price, name) {
-    let quantity = parseInt(document.getElementById(`qty-${productId}`).value);
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let quantity = parseInt(document.getElementById(`qty-${productId}`).value) || 1;
+    let cart = JSON.parse(localStorage.getItem("cart")) || []; // Inicializar como array
 
-    let existingProduct = cart.find((item) => item.id === productId);
-    if (existingProduct) {
-        existingProduct.quantity += quantity;
+    const existingItemIndex = cart.findIndex(item => item.id === productId);
+
+    if (existingItemIndex > -1) {
+        cart[existingItemIndex].quantity += quantity;
     } else {
         cart.push({
             id: productId,
+            name: name,
             image: imageUrl,
             url: url,
-            price: price,
-            name: name,
-            quantity: quantity,
+            price: parseFloat(price),
+            quantity: quantity
         });
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    updateCartCount();
-    updateCartTotal();
-    updateCartDropdown();
-    // Si el producto está en wishlist, eliminarlo al agregar al carrito
-    removeFromWishlist(productId);
-
-    toastr.success(
-        "Producto agregado al carrito y eliminado de la lista de deseos"
-    );
+    updateCartCount(); // Asegúrate de actualizar el contador si tienes uno
+    updateCartDropdown(); // Actualiza el dropdown del carrito si lo tienes
+    alert("Producto agregado al carrito");
 }
+
 
 // Función para agregar a la wishlist
 function addToWishlist(productId, imageUrl, url, price, name) {
@@ -95,8 +94,11 @@ function addToWishlist(productId, imageUrl, url, price, name) {
     }
 }
 
+
+
 // Función para cargar el carrito
 function loadCart() {
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let cartContainer = document.getElementById("cart-container");
 
@@ -131,7 +133,7 @@ function loadCart() {
                 <a href="${item.url}">
                     <img src="${
                         item.image
-                    }" class="img-fluid blur-up lazyload" style="width: 80px;" alt="${
+                    }" class="img-fluid blur-up lazyload" style="width: 100px;" alt="${
             item.name
         }">
                 </a>
@@ -149,24 +151,18 @@ function loadCart() {
 
             <!-- Cantidad con botones de aumento/disminución -->
             <td class="text-center align-middle">
-                <div class="cart_qty">
-                    <div class="input-group">
-                        <button type="button" class="btn qty-left-minus" onclick="updateQuantity(${
-                            item.id
-                        }, 'minus')">
-                            <i class="fa fa-minus ms-0"></i>
-                        </button>
-                        <input class="form-control input-number qty-input text-center" type="text" id="qty-${
-                            item.id
-                        }" value="${item.quantity}" readonly>
-                        <button type="button" class="btn qty-right-plus" onclick="updateQuantity(${
-                            item.id
-                        }, 'plus')">
-                            <i class="fa fa-plus ms-0"></i>
-                        </button>
-                    </div>
+            <div class="cart_qty">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <button type="button" class="btn btn-sm qty-left-minus" onclick="updateQuantity(${item.id}, 'minus')">
+                        <i class="fa fa-minus ms-0"></i>
+                    </button>
+                    <input class="form-control input-number qty-input text-center mx-2" type="text" id="qty-${item.id}" value="${item.quantity}" style="width: 50px;" readonly>
+                    <button type="button" class="btn btn-sm qty-right-plus" onclick="updateQuantity(${item.id}, 'plus')">
+                        <i class="fa fa-plus ms-0"></i>
+                    </button>
                 </div>
-            </td>
+            </div>
+        </td>
 
             <!-- Total -->
             <td class="text-center text-content align-middle">
@@ -193,6 +189,7 @@ function loadCart() {
     updateCartTotal();
     console.log("Carrito cargado:", cart);
 }
+
 
 // Función para cargar la wishlist y mostrarla en wishlists/index.blade.php
 function loadWishlist() {
@@ -297,3 +294,40 @@ function removeFromWishlist(productId) {
     loadWishlist();        // Recargar la wishlist en la vista
     toastr.success('Producto eliminado de la lista de deseos');
 }
+
+//funcion para acctualizar la cantidad de productos en el icono de la wishlist en el header
+
+function updateWishlistCount() {
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    let wishlistCountElement = document.getElementById("wishlist-count");
+
+    if (wishlistCountElement) {
+        wishlistCountElement.textContent = wishlist.length;
+    }
+}
+
+
+
+// Función para actualizar el total general del carrito
+function updateCartTotal() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    let shipping = cart.length > 0 ? 6.9 : 0; // Agregar envío si hay productos
+    let total = subtotal + shipping;
+
+    document.getElementById("subtotal").textContent = `$ ${subtotal.toFixed(2)}`;
+    document.getElementById("total").textContent = `$ ${total.toFixed(2)}`;
+
+
+}
+
+
+//funcion para eliminar un producto del carrito
+function removeFromCart(productId) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = cart.filter(i => i.id !== productId);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+    updateCartTotal();
+}
+
