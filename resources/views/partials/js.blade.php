@@ -29,5 +29,7 @@
 <script src="../assets/js/script.js"></script>
 <!-- Configuración dinámica del tema (colores, layout, etc.) -->
 <script src="../assets/js/theme-setting.js"></script>
+ <!-- Price Range Js -->
+    <script src="../assets/js/ion.rangeSlider.min.js"></script>
 
 

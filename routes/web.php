@@ -32,6 +32,7 @@ Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.in
 
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('/shop', [ProductController::class, 'shop'])->name('shop.index');
 
 
 require __DIR__.'/auth.php';

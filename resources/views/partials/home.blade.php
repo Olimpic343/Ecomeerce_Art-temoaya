@@ -30,7 +30,7 @@
                         <div>
                             <h4 class="fw-bold">Fresco y 100% Orgánico</h4>
                             <h5 class="text-center">mercado del agricultor</h5>
-                            <button class="btn bg-white theme-color mt-3 home-button mx-auto btn-2" onclick="location.href = 'shop-left-sidebar.html';">
+                            <button class="btn bg-white theme-color mt-3 home-button mx-auto btn-2" onclick="location.href = '{{ route('shop.index') }}';">
                                 Comprar ahora
                             </button>
                         </div>

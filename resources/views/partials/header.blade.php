@@ -7,7 +7,7 @@
         <div class="notification-slider">
             <div>
                 <div class="timer-notification text-center">
-                    <h6><strong class="me-1">Bienvenido a ArtTemoaya</strong>nuevas ofertas y regalos.<strong class="ms-1">New Coupon Code: Fast024
+                    <h6><strong class="me-1">Bienvenido a ArtTemoaya</strong><strong class="ms-1">
                         </strong>
                     </h6>
                 </div>
@@ -15,14 +15,12 @@
 
             <div>
                 <div class="timer-notification text-center">
-                    <h6>Something you love is now on sale!<a href="shop-left-sidebar.html" class="text-white">Buy
-                            Now
-                            !</a>
+                    <h6>Encuentra productos artesanales de todo tipo!<a href="shop-left-sidebar.html" class="text-white"></a>
                     </h6>
                 </div>
             </div>
         </div>
-        <button class="btn close-notification"><span>Close</span> <i class="fas fa-times"></i></button>
+
     </div>
 
 
