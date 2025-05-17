@@ -11,7 +11,7 @@
                             <h6 class="ls-expanded text-uppercase">Premium</h6>
                             <h3 class="mb-sm-3 mb-1">Verduras frescas y alimentación diaria</h3>
                             <h4>Obtén 50% de descuento extra</h4>
-                            <button class="btn theme-color bg-white btn-md fw-bold mt-sm-3 mt-1 mend-auto" onclick="location.href = 'shop-left-sidebar.html';">
+                            <button class="btn theme-color bg-white btn-md fw-bold mt-sm-3 mt-1 mend-auto" onclick="location.href = '{{ route('shop.index') }}';">
                                 Comprar ahora
                             </button>
                         </div>
@@ -28,7 +28,7 @@
                             <h6 class="ls-expanded text-uppercase">Disponible</h6>
                             <h3 class="mb-sm-3 mb-1">Frutas 100% naturales y saludables</h3>
                             <h4 class="text-content">Especial de fin de semana</h4>
-                            <button class="btn theme-bg-color text-white btn-md fw-bold mt-sm-3 mt-1 mend-auto" onclick="location.href = 'shop-left-sidebar.html';">
+                            <button class="btn theme-bg-color text-white btn-md fw-bold mt-sm-3 mt-1 mend-auto" onclick="location.href = '{{ route('shop.index') }}';">
                                 Comprar ahora
                             </button>
                         </div>

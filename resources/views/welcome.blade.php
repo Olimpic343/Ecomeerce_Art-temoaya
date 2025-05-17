@@ -4,9 +4,7 @@
  <!-- home section start -->
  @include('partials.home')
 <!-- Home Section End -->
-<!-- Category Section Start -->
-@include('partials.category')
-<!-- Category Section End -->
+
 <!-- Value Section Start -->
 @include('partials.value')
 <!-- Value Section End -->

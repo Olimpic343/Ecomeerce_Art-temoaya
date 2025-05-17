@@ -16,7 +16,7 @@
                                 <h6>Verduras frescas</h6>
                             </div>
                             <div class="offer-box">
-                                <button onclick="location.href = 'shop-left-sidebar.html';" class="btn-category btn theme-bg-color text-white">
+                                <button onclick="location.href = '{{ route('shop.index') }}';" class="btn-category btn theme-bg-color text-white">
                                     Comprar Ahora
                                 </button>
                             </div>
@@ -32,7 +32,7 @@
                                 <h6>Verduras orgánicas</h6>
                             </div>
                             <div class="offer-box">
-                                <button onclick="location.href = 'shop-left-sidebar.html';" class="btn-category btn theme-bg-color text-white">
+                                <button onclick="location.href = '{{ route('shop.index') }}';" class="btn-category btn theme-bg-color text-white">
                                     Comprar Ahora
                                 </button>
                             </div>
@@ -48,7 +48,7 @@
                                 <h6>Frutas y verduras</h6>
                             </div>
                             <div class="offer-box">
-                                <button onclick="location.href = 'shop-left-sidebar.html';" class="btn-category btn theme-bg-color text-white">
+                                <button onclick="location.href = '{{ route('shop.index') }}';" class="btn-category btn theme-bg-color text-white">
                                     Comrar Ahora
                                 </button>
                             </div>
@@ -64,7 +64,7 @@
                                 <h6>Frutas y verduras</h6>
                             </div>
                             <div class="offer-box">
-                                <button onclick="location.href = 'shop-left-sidebar.html';" class="btn-category btn theme-bg-color text-white">
+                                <button onclick="location.href = '{{ route('shop.index') }}';" class="btn-category btn theme-bg-color text-white">
                                     Comprar Ahora
                                 </button>
                             </div>

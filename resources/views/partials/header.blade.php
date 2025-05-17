@@ -55,10 +55,14 @@
                         <div class="middle-box">
                             <div class="center-box">
                                 <div class="searchbar-box order-xl-1 d-none d-xl-block">
-                                    <input type="search" class="form-control" id="exampleFormControlInput1" placeholder="search for product, delivered to your door...">
-                                    <button class="btn search-button">
-                                        <i class="iconly-Search icli"></i>
-                                    </button>
+                                <form action="{{ route('shop.index') }}" method="GET" class="search-form">
+                                        <input type="text" name="search" class="form-control" placeholder="Buscar productos..."
+                                            value="{{ request('search') }}">
+                                        <button type="submit" class="btn search-button">
+                                            <i class="iconly-Search icli"></i>
+                                        </button>
+                                </form>
+
                                 </div>
 
                             </div>
@@ -95,8 +99,6 @@
                                             <small id="cart-count-uno" class="badge-number">2</small>
                                             <i class="iconly-Bag-2 icli"></i>
                                         </a>
-
-
 
 
 

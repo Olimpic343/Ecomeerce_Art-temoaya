@@ -74,7 +74,7 @@
                     <div class="button-group cart-button">
                         <ul>
                             <li>
-                                <button class="btn btn-animation proceed-btn fw-bold" onclick="checkout()">
+                                <button class="btn btn-animation proceed-btn fw-bold" onclick="window.location.href = '{{ route('cart.checkout') }}'">
                                     Proceder al Pago
                                 </button>
                             </li>

@@ -20,6 +20,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+
+     Route::post('/sync/cart-wishlist', [CartController::class, 'syncCartWishlist'])
+        ->name('sync.cart.wishlist')
+        ->middleware('auth');
+
+    Route::delete('/cart/{product_id}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::delete('/wishlist/{product_id}', [WishlistController::class, 'remove'])->name('wishlist.remove');
 });
 
 Route::get('/producto/{id}', [ProductController::class, 'show'])->name('product.details');

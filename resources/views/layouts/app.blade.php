@@ -98,7 +98,17 @@
     <!-- latest jquery-->
     @include('partials.js')
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script src="{{ asset('js/cart.js') }}"></script>
+
+    <script>
+        window.authUserId = {{ Auth::check() ? Auth::id() : 'null' }};
+        window.syncCartWishlistUrl = "{{ route('sync.cart.wishlist') }}";
+
+    </script>
+    <script src="{{ asset('js/syncro.js') }}"></script>
 </body>
 
 </html>

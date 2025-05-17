@@ -29,9 +29,6 @@ function updateQuantity(productId, action) {
     updateCartTotal();
 }
 
-
-
-
 // Función para actualizar el contador de wishlist en el icono del header
 function updateWishlistCount() {
     let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
@@ -45,8 +42,6 @@ function updateWishlistCount() {
 }
 
 
-
-
 function updateCartCount() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let cartElement = document.getElementById("cart-count-uno");
@@ -57,8 +52,6 @@ function updateCartCount() {
         cartElement2.textContent = cart.length;
     }
 }
-
-
 
 
 // Función para agregar al carrito
@@ -109,8 +102,6 @@ function addToWishlist(productId, imageUrl, url, price, name) {
         toastr.success("Este producto ya está en la lista de deseos");
     }
 }
-
-
 
 // Función para cargar el carrito
 function loadCart() {
@@ -301,14 +292,32 @@ function editReview(reviewId, rating, comment) {
 // Función para eliminar un producto de la wishlist
 function removeFromWishlist(productId) {
     let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-
-    wishlist = wishlist.filter(item => item && item.id !== productId);
+    wishlist = wishlist.filter((item) => item && item.id !== productId);
 
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
 
     updateWishlistCount(); // Actualizar contador
     loadWishlist();        // Recargar la wishlist en la vista
     toastr.success('Producto eliminado de la lista de deseos');
+
+    // Eliminar también de la base de datos si el usuario está logueado
+    if (window.authUserId) {
+        fetch("/wishlist/" + productId, {
+            method: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+                "Content-Type": "application/json",
+            },
+        })
+            .then(res => {
+                if (!res.ok)
+                    throw new Error("❌ No se pudo eliminar de la base de datos");
+                console.log("💔 Producto eliminado de BD (wishlist):",productId);
+            })
+            .catch(err => console.error(err));
+    }
 }
 
 //funcion para acctualizar la cantidad de productos en el icono de la wishlist en el header
@@ -321,10 +330,6 @@ function updateWishlistCount() {
         wishlistCountElement.textContent = wishlist.length;
     }
 }
-
-
-
-
 
 // Función para actualizar el total general del carrito
 function updateCartTotal() {
@@ -355,15 +360,11 @@ function updateCartTotal() {
         document.getElementById("cart-dropdown-total").textContent = `$ ${total.toFixed(2)}`;
     }
 }
-
-
-
 // Función para obtener el total del carrito desde localStorage
 function getCartTotal() {
     return localStorage.getItem("cartTotal") || '0.00';
 
 }
-
 
 //funcion para eliminar un producto del carrito
 function removeFromCart(productId) {
@@ -373,8 +374,30 @@ function removeFromCart(productId) {
     updateCartCount();
     loadCart();
     updateCartTotal();
-}
 
+    if (window.authUserId) {
+        fetch("/cart/" + productId, {
+            method: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => {
+                if (!res.ok)
+                    throw new Error(
+                        "❌ No se pudo eliminar de la base de datos"
+                    );
+                console.log(
+                    "🧹 Producto eliminado de BD (carrito):",
+                    productId
+                );
+            })
+            .catch((err) => console.error(err));
+    }
+}
 
 function updateCartDropdown() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
