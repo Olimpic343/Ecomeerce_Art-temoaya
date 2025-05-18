@@ -46,78 +46,40 @@
                                         </div>
 
                                         <div class="checkout-detail">
-                                            <div class="row g-4">
-                                                  <div class="col-xxl-6 col-lg-12 col-md-6">
-                                                    <div class="delivery-address-box">
-                                                        <div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="jack" id="flexRadioDefault2" checked="checked">
-                                                            </div>
-
-                                                            <ul class="delivery-address-detail">
-                                                                <li>
-                                                                    <h4 class="fw-500">Adress</h4>
-                                                                </li>
-
-                                                                <li>
-                                                                    <p class="text-content"><span class="text-title">Ciudad:</span>Nakhimovskiy R-N / Lastovaya Ul.,
-                                                                        bld. 5/A, appt. 12
-                                                                    </p>
-                                                                </li>
-
-                                                                <li>
-                                                                    <h6 class="text-content"><span class="text-title">Estado:</span>
-                                                                        +380</h6>
-                                                                </li>
-
-                                                                <li>
-                                                                    <h6 class="text-content mb-0"><span class="text-title">Codigo Postal:</span> + 380 (0564) 53 - 29 - 68</h6>
-                                                                </li>
-
-                                                                 <li>
-                                                                    <h6 class="text-content"><span class="text-title">Pais:</span>
-                                                                        +380</h6>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <div class="row g-4">
+                                            @forelse ($addresses as $address)
                                                 <div class="col-xxl-6 col-lg-12 col-md-6">
                                                     <div class="delivery-address-box">
                                                         <div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="jack" id="flexRadioDefault2" checked="checked">
+                                                                <input class="form-check-input" type="radio" name="shipping_address_id"
+                                                                    id="address-{{ $address->id }}" value="{{ $address->id }}" required>
                                                             </div>
 
                                                             <ul class="delivery-address-detail">
-                                                                <li>
-                                                                    <h4 class="fw-500">Adress</h4>
-                                                                </li>
-
-                                                                <li>
-                                                                    <p class="text-content"><span class="text-title">Ciudad:</span>Nakhimovskiy R-N / Lastovaya Ul.,
-                                                                        bld. 5/A, appt. 12
-                                                                    </p>
-                                                                </li>
-
-                                                                <li>
-                                                                    <h6 class="text-content"><span class="text-title">Estado:</span>
-                                                                        +380</h6>
-                                                                </li>
-
-                                                                <li>
-                                                                    <h6 class="text-content mb-0"><span class="text-title">Codigo Postal:</span> + 380 (0564) 53 - 29 - 68</h6>
-                                                                </li>
-
-                                                                 <li>
-                                                                    <h6 class="text-content"><span class="text-title">Pais:</span>
-                                                                        +380</h6>
-                                                                </li>
+                                                                <li><h4 class="fw-500">{{ $address->address }}</h4></li>
+                                                                <li><p class="text-content"><span class="text-title">Ciudad:</span> {{ $address->city }}</p></li>
+                                                                <li><h6 class="text-content"><span class="text-title">Estado:</span> {{ $address->state }}</h6></li>
+                                                                <li><h6 class="text-content"><span class="text-title">Codigo Postal:</span> {{ $address->postal_code }}</h6></li>
+                                                                <li><h6 class="text-content"><span class="text-title">Pais:</span> {{ $address->country }}</h6></li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            @empty
+                                                <div class="col-12">
+                                                    <p class="text-danger">No tienes direcciones registradas.</p>
+                                                </div>
+                                            @endforelse
+
+                                            <!-- Bot贸n para mostrar el modal -->
+                                            <div class="col-12">
+                                                <button type="button" class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold"
+                                                    data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                                                    Agregar nueva direccion
+                                                </button>
                                             </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </li>
@@ -275,6 +237,47 @@
         </div>
     </section>
     <!-- Checkout section End -->
+
+    <!-- Modal para agregar direcci贸n -->
+<div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="{{ route('shipping.store') }}" method="POST">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAddressModalLabel">Nueva Direccion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label>Direccion</label>
+                        <input type="text" name="address" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>Ciudad</label>
+                        <input type="text" name="city" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>Estado</label>
+                        <input type="text" name="state" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>Codigo Postal</label>
+                        <input type="text" name="zip_code" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label>Pais</label>
+                        <input type="text" name="country" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="submit"   class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold">Guardar Direccion</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 
 @endsection

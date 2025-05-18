@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ShippingAddressController;
 
 
 Route::get('/',[HomeController::class, 'index'])->name('home');
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/cart/{product_id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::delete('/wishlist/{product_id}', [WishlistController::class, 'remove'])->name('wishlist.remove');
+    Route::post('/shipping-address', [ShippingAddressController::class, 'store'])->name('shipping.store');
 });
 
 Route::get('/producto/{id}', [ProductController::class, 'show'])->name('product.details');

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use App\Models\Cart;
+use App\Models\ShippingAddress;
+use App\Models\Wishlist;
 
 class CartController extends Controller
 {
@@ -65,7 +68,12 @@ class CartController extends Controller
 
      public function checkout()
     {
-        return view('cart.checkout');
+
+        $user = auth()->user();
+        $cartItems = Cart::where('user_id', $user->id)->with('product')->get();
+        $addresses = ShippingAddress::where('user_id', $user->id)->get();
+
+        return view('cart.checkout', compact('cartItems', 'addresses'));
     }
 
 
