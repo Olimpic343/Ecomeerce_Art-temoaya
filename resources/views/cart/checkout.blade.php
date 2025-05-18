@@ -149,12 +149,9 @@
                                         </lord-icon>
                                     </div>
                                     <div class="checkout-box">
-                                        <div class="checkout-title">
-                                            <h4>Pagar</h4>
-                                        </div>
 
                                         <div class="checkout-detail">
-                                            <button class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold">Place Order</button>
+                                            <button class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold">Pagar con Stripe </button>
 
                                         </div>
                                     </div>
@@ -166,71 +163,45 @@
 
                 <div class="col-lg-4">
                     <div class="right-side-summery-box">
-                        <div class="summery-box-2">
-                            <div class="summery-header">
-                                <h3>Order Summery</h3>
-                            </div>
+                    @php
+                        $shippingCost = 6.90;
+                        $subTotal = $cartItems->sum('sub_total');
+                        $total = $subTotal + $shippingCost;
+                    @endphp
 
-                            <ul class="summery-contain">
-                                <li>
-                                    <img src="../assets/images/vegetable/product/1.png" class="img-fluid blur-up lazyloaded checkout-image" alt="">
-                                    <h4>Bell pepper <span>X 1</span></h4>
-                                    <h4 class="price">$32.34</h4>
-                                </li>
-
-                                <li>
-                                    <img src="../assets/images/vegetable/product/2.png" class="img-fluid blur-up lazyloaded checkout-image" alt="">
-                                    <h4>Eggplant <span>X 3</span></h4>
-                                    <h4 class="price">$12.23</h4>
-                                </li>
-
-                                <li>
-                                    <img src="../assets/images/vegetable/product/3.png" class="img-fluid blur-up lazyloaded checkout-image" alt="">
-                                    <h4>Onion <span>X 2</span></h4>
-                                    <h4 class="price">$18.27</h4>
-                                </li>
-
-                                <li>
-                                    <img src="../assets/images/vegetable/product/4.png" class="img-fluid blur-up lazyloaded checkout-image" alt="">
-                                    <h4>Potato <span>X 1</span></h4>
-                                    <h4 class="price">$26.90</h4>
-                                </li>
-
-                                <li>
-                                    <img src="../assets/images/vegetable/product/5.png" class="img-fluid blur-up lazyloaded checkout-image" alt="">
-                                    <h4>Baby Chili <span>X 1</span></h4>
-                                    <h4 class="price">$19.28</h4>
-                                </li>
-
-                                <li>
-                                    <img src="../assets/images/vegetable/product/6.png" class="img-fluid blur-up lazyloaded checkout-image" alt="">
-                                    <h4>Broccoli <span>X 2</span></h4>
-                                    <h4 class="price">$29.69</h4>
-                                </li>
-                            </ul>
-
-                            <ul class="summery-total">
-                                <li>
-                                    <h4>Subtotal</h4>
-                                    <h4 class="price">$111.81</h4>
-                                </li>
-
-                                <li>
-                                    <h4>Shipping</h4>
-                                    <h4 class="price">$8.90</h4>
-                                </li>
-
-
-                                <li class="list-total">
-                                    <h4>Total (MXN)</h4>
-                                    <h4 class="price">$19.28</h4>
-                                </li>
-                            </ul>
+                         <div class="summery-box-2">
+                        <div class="summery-header">
+                            <h3>Detalle de Compra</h3>
                         </div>
 
+                        <ul class="summery-contain">
+                            @foreach ($cartItems as $item)
+                                <li>
+                                    <img src="{{ asset('storage/' . $item->product->image) }}" class="img-fluid blur-up lazyloaded checkout-image" alt="{{ $item->product->name }}">
+                                    <h4>{{ $item->product->name }} <span>X {{ $item->quantity }}</span></h4>
+                                    <h4 class="price">$ {{ number_format($item->sub_total, 2) }}</h4>
+                                </li>
+                            @endforeach
+                        </ul>
 
+                        <ul class="summery-total">
+                            <li>
+                                <h4>Subtotal</h4>
+                                <h4 class="price">$ {{ number_format($subTotal, 2) }}</h4>
+                            </li>
 
+                            <li>
+                                <h4>Envio</h4>
+                                <h4 class="price">$ {{ number_format($shippingCost, 2) }}</h4>
+                            </li>
+                            <br>
 
+                            <li class="list-total">
+                                <h4>Total (MXN)</h4>
+                                <h4 class="price">$ {{ number_format($total, 2) }}</h4>
+                            </li>
+                        </ul>
+                    </div>
                     </div>
                 </div>
             </div>
