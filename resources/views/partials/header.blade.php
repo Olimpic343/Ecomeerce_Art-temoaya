@@ -140,7 +140,7 @@
                                                     </li>
                                                     <li class="product-box-contain">
 
-                                                        <a href="#">Perfil</a>
+                                                        <a href="{{ route('dashboard') }}">Perfil</a>
 
                                                     </li>
                                                     <li class="product-box-contain">

@@ -8,7 +8,7 @@
                         <div>
                             <h4 class="ls-expanded text-uppercase theme-color">¡Prueba lo nuevo!</h4>
                             <h2 class="my-3">100% Orgánico, Mejor Calidad, Mejor Precio</h2>
-                            <h4 class="text-content fw-300">La mejor calidad en alimentos Fastkart</h4>
+                            <h4 class="text-content fw-300">La mejor calidad en productos artesanales</h4>
                             <button class="btn theme-bg-color mt-sm-4 btn-md mx-auto text-white fw-bold" onclick="location.href = '{{ route('shop.index') }}';">
                                 Comprar ahora
                             </button>

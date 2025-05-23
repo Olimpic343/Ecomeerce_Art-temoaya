@@ -10,16 +10,7 @@ class ShippingAddressController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
 
-
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -47,35 +38,49 @@ class ShippingAddressController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function storeAddress(Request $request){
+        $request->validate([
+            'address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zip_code' => 'required',
+            'country' => 'required',
+        ]);
+
+        ShippingAddress::create([
+            'user_id' => auth()->id(),
+            'address' => $request->address,
+            'city' => $request->city,
+            'state' => $request->state,
+            'zip_code' => $request->zip_code,
+            'country' => $request->country,
+        ]);
+
+        return redirect()->back()->with('success', 'Dirección guardada correctamente.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function updateAddress(Request $request, $id){
+        $address = ShippingAddress::where('user_id', auth()->id())->findOrFail($id);
+
+        $request->validate([
+            'address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zip_code' => 'required',
+            'country' => 'required',
+        ]);
+
+        $address->update($request->all());
+
+        return redirect()->back()->with('success', 'Dirección actualizada.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function destroyAddress($id){
+        $address = ShippingAddress::where('user_id', auth()->id())->findOrFail($id);
+        $address->delete();
+
+        return redirect()->back()->with('success', 'Dirección eliminada.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+
 }

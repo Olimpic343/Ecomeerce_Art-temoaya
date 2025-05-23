@@ -33,7 +33,11 @@
             <div class="row g-sm-4 g-3">
                 <div class="col-lg-8">
                     <div class="left-sidebar-checkout">
-                        <div class="checkout-detail-box">
+
+                             <form action="{{ route('stripe.checkout') }}" method="POST">
+                             @csrf
+
+                      <div class="checkout-detail-box">
                             <ul>
                                 <li>
                                     <div class="checkout-icon">
@@ -52,7 +56,7 @@
                                                     <div class="delivery-address-box">
                                                         <div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="shipping_address_id"
+                                                                <input class="form-check-input" type="radio" name="user_address_id"
                                                                     id="address-{{ $address->id }}" value="{{ $address->id }}" required>
                                                             </div>
 
@@ -145,20 +149,27 @@
 
                                 <li>
                                     <div class="checkout-icon">
-                                        <lord-icon target=".nav-item" src="../../qmcsqnle.json" trigger="loop-on-hover" colors="primary:#0baf9a,secondary:#0baf9a" class="lord-icon">
+                                         <lord-icon target=".nav-item" src="../../qmcsqnle.json" trigger="loop-on-hover" colors="primary:#0baf9a,secondary:#0baf9a" class="lord-icon">
                                         </lord-icon>
                                     </div>
                                     <div class="checkout-box">
 
                                         <div class="checkout-detail">
-                                            <button class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold">Pagar con Stripe </button>
+
+
+                                                    <button type="submit" class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold">
+                                                        Pagar con Stripe
+                                                    </button>
 
                                         </div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
+                             </form>
                     </div>
+               </form>
+
                 </div>
 
                 <div class="col-lg-4">
