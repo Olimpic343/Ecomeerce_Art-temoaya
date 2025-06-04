@@ -12,6 +12,9 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
+use App\Mail\PasswordChanged;
+use Illuminate\Support\Facades\Mail;
+
 class NewPasswordController extends Controller
 {
     /**
@@ -47,6 +50,8 @@ class NewPasswordController extends Controller
                 ])->save();
 
                 event(new PasswordReset($user));
+                // Enviar correo de notificación
+                Mail::to($user->email)->send(new PasswordChanged($user));
             }
         );
 

@@ -31,5 +31,6 @@
 <script src="../assets/js/theme-setting.js"></script>
  <!-- Price Range Js -->
     <script src="../assets/js/ion.rangeSlider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 

@@ -35,3 +35,19 @@
 
 <!-- CSS principal del template -->
 <link id="color-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Bootstrap -->
+<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+
+<!-- Iconos y fuentes -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet">
+
+<!-- Tu CSS principal -->
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+@stack('styles')
+

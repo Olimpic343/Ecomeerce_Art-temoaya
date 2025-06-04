@@ -15,6 +15,8 @@ use Stripe\Checkout\Session as StripeSession;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmationMail;
 
 class PaymentController extends Controller
 {
@@ -134,9 +136,6 @@ class PaymentController extends Controller
 
 
 
-
-
-
     public function success(){
 
          $user = auth()->user();
@@ -222,6 +221,9 @@ class PaymentController extends Controller
             ]);
 
             Log::info('💳 Pago registrado con éxito: ' . $paymentIntent->id);
+
+         Mail::to($user->email)->send(new OrderConfirmationMail($order));
+            Log::info('📧 Correo de confirmación enviado a ' . $user->email);
 
 
         return view('cart.success', compact('order'));

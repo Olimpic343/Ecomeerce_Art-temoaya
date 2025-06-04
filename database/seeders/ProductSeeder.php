@@ -33,21 +33,22 @@ class ProductSeeder extends Seeder
             'p31.jpeg',
         ];
 
-        for ($i = 0; $i < 1000; $i++) {
+        // Cambiado de 1000 a 200 productos
+        for ($i = 0; $i < 200; $i++) {
             $price = $faker->randomFloat(2, 20, 500);
-            $name = $faker->words(3, true);
+            $name  = $faker->words(3, true);
 
             Product::create([
                 'category_id' => $faker->randomElement($categoryIds),
-                'brand_id' => $faker->randomElement($brandIds),
-                'name' => ucfirst($name),
-                'slug' => Str::slug($name) . '-' . $faker->unique()->numberBetween(1000, 9999),
+                'brand_id'    => $faker->randomElement($brandIds),
+                'name'        => ucfirst($name),
+                'slug'        => Str::slug($name) . '-' . $faker->unique()->numberBetween(1000, 9999),
                 'description' => $faker->paragraph(),
-                'price' => $price,
-                'price2' => max($price - 1, 1),
-                'stock' => $faker->numberBetween(100, 1000),
-                'image' => 'products/' . fake()->randomElement($images),
-                'status' => $faker->randomElement(['active', 'inactive']),
+                'price'       => $price,
+                'price2'      => max($price - 1, 1),
+                'stock'       => $faker->numberBetween(100, 1000),
+                'image'       => 'products/' . $faker->randomElement($images),
+                'status'      => $faker->randomElement(['active', 'inactive']),
             ]);
         }
     }

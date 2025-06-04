@@ -104,7 +104,7 @@
 
                 <div class="col-xxl-3 col-xl-4 col-sm-6">
                     <div class="footer-title">
-                        <h4>Store infomation</h4>
+                        <h4>Informacion de la tienda</h4>
                     </div>
                     <ul class="footer-address footer-contact">
                         <li>

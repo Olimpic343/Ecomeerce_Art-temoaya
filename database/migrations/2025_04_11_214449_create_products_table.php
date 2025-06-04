@@ -12,17 +12,25 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('brand_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->text('description');
-            $table->decimal('price', 10, 2);
-            $table->integer('stock');
-            $table->string('image')->nullable();
-            $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->timestamps();
+           $table->id();
+
+        // Relaciones (una sola vez cada campo)
+        $table->foreignId('category_id')
+              ->constrained()
+              ->cascadeOnDelete();
+        $table->foreignId('brand_id')
+              ->constrained()
+              ->cascadeOnDelete();
+
+        // Campos del producto
+        $table->string('name');
+        $table->string('slug')->unique();
+        $table->text('description')->nullable();
+        $table->decimal('price', 10, 2);
+        $table->integer('stock');
+        $table->string('image')->nullable();
+        $table->enum('status', ['active', 'inactive'])->default('active');
+        $table->timestamps();
         });
     }
 

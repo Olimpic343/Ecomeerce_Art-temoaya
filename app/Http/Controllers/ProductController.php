@@ -7,6 +7,9 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Brand;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class ProductController extends Controller
 {
@@ -15,7 +18,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+       $products = Product::latest()->paginate(10);
+    $brands   = Brand::all();           // <— añadimos marcas
+     $categories = Category::all();
+    return view('admin.products.index', compact('products','brands','categories'));
     }
 
     /**
@@ -23,7 +29,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $brands = Brand::all();
+        return view('admin.products.create', compact('brands'));
     }
 
     /**
@@ -31,39 +38,84 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name'        => 'required|string|max:255',
+            'price'       => 'required|numeric|min:0',
+            'brand_id'    => 'required|exists:brands,id',
+            'category_id' => 'required|exists:categories,id',
+            'stock'       => 'required|integer|min:0',
+            'description' => 'nullable|string',
+            'image'       => 'nullable|image|max:2048',
+        ]);
+
+          // Generar un slug único a partir del nombre
+    $data['slug'] = Str::slug($data['name']);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')
+                                  ->store('products', 'public');
+        }
+
+        Product::create($data);
+
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Producto creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+   public function edit(Product $product)
+    {
+        $brands = Brand::all();
+        return view('admin.products.edit', compact('product','brands'));
+    }
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+
+   public function update(Request $request, Product $product)
     {
-        //
+        $data = $request->validate([
+            'name'        => 'required|string|max:255',
+            'price'       => 'required|numeric|min:0',
+            'brand_id'    => 'required|exists:brands,id',
+            'category_id' => 'required|exists:categories,id',
+            'stock'       => 'required|integer|min:0',
+            'description' => 'nullable|string',
+            'image'       => 'nullable|image|max:2048',
+        ]);
+
+         $data['slug'] = Str::slug($data['name']);
+
+        if ($request->hasFile('image')) {
+            // Borra imagen anterior si existe
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $data['image'] = $request->file('image')
+                                  ->store('products', 'public');
+        }
+
+        $product->update($data);
+
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Producto actualizado correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+
+    public function destroy(Product $product)
     {
-        //
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
+        }
+        $product->delete();
+
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Producto eliminado correctamente.');
     }
 
 

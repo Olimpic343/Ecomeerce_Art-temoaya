@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Iniciar Sesion')
+@section('title', 'Registrate')
 @section('content')
 <section class="breadcrumb-section pt-0">
     <div class="container-fluid-lg">

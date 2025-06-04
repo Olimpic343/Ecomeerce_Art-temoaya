@@ -78,7 +78,7 @@ function addToCart(productId, imageUrl, url, price, name) {
     updateCartCount(); // Asegúrate de actualizar el contador si tienes uno
     updateCartTotal();
     updateCartDropdown(); // Actualiza el dropdown del carrito si lo tienes
-    alert("Producto agregado al carrito");
+    toastr.success("Producto agregado al carrito");
 }
 
 

@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\User;
-use Faker\Factory as Faker;
 
 class ReviewSeeder extends Seeder
 {
@@ -16,23 +16,18 @@ class ReviewSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
         $users = User::where('role', 'customer')->pluck('id')->toArray();
+        $products = Product::all();
 
-        // Iteramos sobre todos los productos
-        foreach (Product::all() as $product) {
-            $usedUsers = []; // Para evitar duplicar reseñas del mismo usuario
-            for ($i = 0; $i < 10; $i++) {
-                do {
-                    $userId = $faker->randomElement($users);
-                } while (in_array($userId, $usedUsers));
-                $usedUsers[] = $userId;
+        foreach ($products as $product) {
+            $numReviews = fake()->numberBetween(10, 20); // Cada producto tendrá entre 10 y 20 reseñas
 
+            for ($i = 0; $i < $numReviews; $i++) {
                 Review::create([
-                    'user_id' => $userId,
+                    'user_id' => fake()->randomElement($users),
                     'product_id' => $product->id,
-                    'rating' => $faker->numberBetween(1, 5),
-                    'comment' => $faker->sentence(),
+                    'rating' => fake()->numberBetween(1, 5),
+                    'comment' => fake()->sentence(),
                 ]);
             }
         }

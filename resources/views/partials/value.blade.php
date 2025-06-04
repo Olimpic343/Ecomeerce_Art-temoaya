@@ -13,7 +13,7 @@
                             <img src="../assets/images/veg-3/value/1.png" class="img-fluid bg-img blur-up lazyload" alt="Verduras frescas">
                             <div class="banner-detail">
                                 <h5 class="theme-color">Compra más, ahorra más</h5>
-                                <h6>Verduras frescas</h6>
+                                <h6>Tapetes</h6>
                             </div>
                             <div class="offer-box">
                                 <button onclick="location.href = '{{ route('shop.index') }}';" class="btn-category btn theme-bg-color text-white">
@@ -29,7 +29,7 @@
                             <img src="../assets/images/veg-3/value/2.png" class="img-fluid bg-img blur-up lazyload" alt="Verduras orgánicas">
                             <div class="banner-detail">
                                 <h5 class="theme-color">¡Ahorra más!</h5>
-                                <h6>Verduras orgánicas</h6>
+                                <h6>Camisas</h6>
                             </div>
                             <div class="offer-box">
                                 <button onclick="location.href = '{{ route('shop.index') }}';" class="btn-category btn theme-bg-color text-white">
@@ -45,7 +45,7 @@
                             <img src="../assets/images/veg-3/value/3.png" class="img-fluid bg-img blur-up lazyload" alt="Frutas y verduras">
                             <div class="banner-detail">
                                 <h5 class="theme-color">¡Ofertas calientes!</h5>
-                                <h6>Frutas y verduras</h6>
+                                <h6>Bolsas</h6>
                             </div>
                             <div class="offer-box">
                                 <button onclick="location.href = '{{ route('shop.index') }}';" class="btn-category btn theme-bg-color text-white">
@@ -61,7 +61,7 @@
                             <img src="../assets/images/veg-3/value/1.png" class="img-fluid bg-img blur-up lazyload" alt="Frutas y verduras">
                             <div class="banner-detail">
                                 <h5 class="theme-color">Compra más, ahorra más</h5>
-                                <h6>Frutas y verduras</h6>
+                                <h6>Tapetes</h6>
                             </div>
                             <div class="offer-box">
                                 <button onclick="location.href = '{{ route('shop.index') }}';" class="btn-category btn theme-bg-color text-white">
