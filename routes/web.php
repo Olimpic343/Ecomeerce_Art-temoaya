@@ -16,11 +16,29 @@ use App\Http\Controllers\Auth\CustomForgotPasswordController;
 use App\Http\Controllers\Auth\CustomResetPasswordController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\OrderController;
-
 use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\NewPasswordController;
 
 
 Route::get('/',[HomeController::class, 'index'])->name('home');
+
+Route::middleware('guest')->group(function () {
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+         ->name('password.request');
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+         ->name('password.email');
+
+    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+         ->name('password.reset');
+    Route::post('reset-password', [NewPasswordController::class, 'store'])
+         ->name('password.update');
+});
+
+
+
 
 
 
@@ -52,15 +70,21 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->get('/dashboard', [UserController::class, 'dashboard'])
      ->name('dashboard');
 
+
+
+
+
 // CRUD Productos solo admin
 Route::middleware(['auth','admin'])
      ->prefix('admin')
      ->name('admin.')
      ->group(function(){
          Route::resource('products', ProductController::class)->except(['show']);
+ // CRUD Categorías
+         Route::resource('categories', CategoryController::class)->except(['show']);
 
-
-
+         // CRUD Marcas
+         Route::resource('brands', BrandController::class)->except(['show']);
          Route::get('orders', [AdminOrderController::class, 'index'])
               ->name('orders.index');
 
@@ -86,6 +110,18 @@ Route::middleware(['auth','admin'])
          Route::get('inventory/{product}', [InventoryController::class,'show'])
               ->name('inventory.show');
 
+
+     Route::middleware(['auth','can:manage-products'])->prefix('admin')->name('admin.')->group(function() {
+    Route::get('products', [ProductController::class, 'index'])->name('products.index');
+    Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
+     Route::resource('products', ProductController::class)->except(['show']);
+});
+
+
+
+
+
+
      });
 
 
@@ -93,22 +129,12 @@ Route::middleware(['auth','admin'])
 
 Route::get('/producto/{id}', [ProductController::class, 'show'])->name('product.details');
 Route::get('/{id}/{slug}', [ProductController::class, 'details'])->name('product.details');
-
 Route::post('/review/', [ReviewController::class, 'store'])->middleware('auth')->name('reviews.store');
-
-
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
-
-
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-
-// Rutas para solicitar el enlace de restablecimiento
 Route::get('/shop', [ProductController::class, 'shop'])->name('shop.index');
-Route::get('/forgot-password-custom', [CustomForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request.custom.form');
-Route::post('/forgot-password-custom', [CustomForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.request.custom');
-
-// Rutas para mostrar y procesar el formulario de restablecimiento
-Route::get('/reset-password-custom/{token}', [CustomResetPasswordController::class, 'showResetForm'])->name('password.reset.custom.form');
-Route::post('/reset-password-custom', [CustomResetPasswordController::class, 'reset'])->name('password.reset.custom');
 
 require __DIR__.'/auth.php';
+
+
+

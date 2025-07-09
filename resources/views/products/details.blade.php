@@ -138,7 +138,7 @@
                         </div>
 
                         <p class="vendor-detail">Explora productos de alta calidad de {{ $product->brand->name }}.
-                        Disfruta de la mejor selección en Andercode eCommerce.</p>
+                        Disfruta de la mejor selección en ArtTemoaya.</p>
                     </div>
                 </div>
             </div>

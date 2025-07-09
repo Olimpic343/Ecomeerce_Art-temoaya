@@ -1,108 +1,72 @@
+{{-- resources/views/auth/reset-password.blade.php --}}
+
 @extends('layouts.app')
 
-@section('title','Iniciar Session')
+@section('title', 'Restablecer contraseña')
 
 @section('content')
-<section class="breadcrumb-section pt-0">
-    <div class="container-fluid-lg">
-        <div class="row">
-            <div class="col-12">
-                <div class="breadcrumb-contain">
-                    <h2 class="mb-2">Cambiar Contraseña</h2>
-                    <nav>
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item">
-                                <a href="index.html">
-                                    <i class="fa-solid fa-house"></i>
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item active">Cambiar Contraseña</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
+<div class="container mt-5" style="max-width: 500px;">
+    <h2 class="mb-4">Restablece tu contraseña</h2>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-    </div>
-</section>
+    @endif
 
-<section class="log-in-section section-b-space forgot-section">
-    <div class="container-fluid-lg w-100">
+    <form method="POST" action="{{ route('password.store') }}">
+        @csrf
+        {{-- O @method('POST') si definiste la ruta con POST en lugar de PUT --}}
 
-        <div class="row">
-            <!-- Imagen decorativa -->
-            <div class="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
-                <div class="image-contain">
-                    <img src="{{ asset('assets/images/inner-page/forgot.png') }}" class="img-fluid" alt="Restablecer contraseña en Andercode eCommerce">
-                </div>
-            </div>
+        {{-- 1) Token oculto (viene en la URL) --}}
+        <input type="hidden" name="token" value="{{ $token }}">
 
-            <!-- Formulario de restablecimiento de contraseña -->
-            <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
-                <div class="d-flex align-items-center justify-content-center h-100">
-                    <div class="log-in-box">
-                        <div class="log-in-title">
-                            <h3>Restablece tu contraseña</h3>
-                            <h4>Ingresa tu nueva contraseña</h4>
-                        </div>
-
-                        <!-- Manejo de errores globales -->
-                        @if (session('status'))
-                            <div class="alert alert-success text-center">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        <div class="input-box">
-                            <form class="row g-4" method="POST" action="{{ route('password.reset.custom') }}">
-    @csrf
-    <input type="hidden" name="token" value="{{ $token }}">
-    <div class="col-12">
-        <div class="form-floating theme-form-floating log-in-form">
-            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                   id="email" placeholder="Correo Electrónico" value="{{ $email ?? old('email') }}" required>
-            <label for="email">Correo Electrónico</label>
+        {{-- 2) Email (la vista recibió $email desde el controlador) --}}
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input
+                id="email"
+                type="email"
+                name="email"
+                value="{{ old('email', $email) }}"
+                class="form-control @error('email') is-invalid @enderror"
+                required
+                autofocus>
             @error('email')
-            <span class="invalid-feedback d-block" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
+                <span class="invalid-feedback">{{ $message }}</span>
             @enderror
         </div>
-    </div>
-    <div class="col-12">
-        <div class="form-floating theme-form-floating log-in-form">
-            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Nueva Contraseña" required>
-            <label for="password">Nueva Contraseña</label>
+
+        {{-- 3) Nueva contraseña --}}
+        <div class="mb-3">
+            <label for="password" class="form-label">Nueva contraseña</label>
+            <input
+                id="password"
+                type="password"
+                name="password"
+                class="form-control @error('password') is-invalid @enderror"
+                required>
             @error('password')
-            <span class="invalid-feedback d-block" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
+                <span class="invalid-feedback">{{ $message }}</span>
             @enderror
         </div>
-    </div>
-    <div class="col-12">
-        <div class="form-floating theme-form-floating log-in-form">
-            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmar Contraseña" required>
-            <label for="password_confirmation">Confirmar Nueva Contraseña</label>
-        </div>
-    </div>
-    <div class="col-12">
-        <button class="btn btn-animation w-100" type="submit">
-            Restablecer Contraseña
-        </button>
-    </div>
-</form>
-                        </div>
 
-                        <!-- Enlace para volver a inicio de sesión -->
-                        <div class="sign-up-box mt-3 text-center">
-                            <h4>¿Recordaste tu contraseña?</h4>
-                            <a href="{{ route('login') }}">Iniciar Sesión</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        {{-- 4) Confirmación --}}
+        <div class="mb-3">
+            <label for="password_confirmation" class="form-label">Confirmar contraseña</label>
+            <input
+                id="password_confirmation"
+                type="password"
+                name="password_confirmation"
+                class="form-control"
+                required>
         </div>
 
-    </div>
-</section>
+        <button type="submit" class="btn btn-primary">Restablecer contraseña</button>
+    </form>
+</div>
 @endsection

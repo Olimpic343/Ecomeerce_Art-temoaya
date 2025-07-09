@@ -35,9 +35,11 @@
                 <div class="cart-table">
                     <div class="table-responsive-xl">
                         <table class="table">
+
                             <tbody id="cart-container">
                                 <!-- Los productos se insertarán aquí dinámicamente desde LocalStorage -->
                             </tbody>
+
                         </table>
                     </div>
                 </div>
@@ -66,7 +68,7 @@
 
                     <ul class="summery-total">
                         <li class="list-total border-top-0">
-                            <h4>Total (USD)</h4>
+                            <h4>Total (MXN)</h4>
                             <h4 class="price theme-color" id="total">$0.00</h4>
                         </li>
                     </ul>

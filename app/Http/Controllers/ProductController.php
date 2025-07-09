@@ -18,10 +18,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-       $products = Product::latest()->paginate(10);
-    $brands   = Brand::all();           // <— añadimos marcas
-     $categories = Category::all();
-    return view('admin.products.index', compact('products','brands','categories'));
+     $products   = Product::with(['category', 'brand'])
+                             ->orderBy('id', 'desc')
+                             ->paginate(10); // 10 productos por página
+
+        $categories = Category::all();
+        $brands     = Brand::all();
+
+        return view('admin.products.index', compact('products', 'categories', 'brands'));
     }
 
     /**
@@ -49,12 +53,18 @@ class ProductController extends Controller
         ]);
 
           // Generar un slug único a partir del nombre
-    $data['slug'] = Str::slug($data['name']);
+    $baseSlug = Str::slug($data['name']);
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')
-                                  ->store('products', 'public');
-        }
+    // 2) Intentar usar ese slug; si ya existe, agregar sufijo numérico
+    $slug     = $baseSlug;
+    $counter  = 1;
+
+    while (Product::where('slug', $slug)->exists()) {
+        $slug = $baseSlug . '-' . $counter;
+        $counter++;
+    }
+
+    $data['slug'] = $slug;
 
         Product::create($data);
 
@@ -63,42 +73,78 @@ class ProductController extends Controller
             ->with('success', 'Producto creado correctamente.');
     }
 
-   public function edit(Product $product)
-    {
-        $brands = Brand::all();
-        return view('admin.products.edit', compact('product','brands'));
-    }
+
     public function show(string $id)
     {
         //
     }
 
-
-   public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product)
     {
+        // 1) Validar datos
         $data = $request->validate([
-            'name'        => 'required|string|max:255',
-            'price'       => 'required|numeric|min:0',
-            'brand_id'    => 'required|exists:brands,id',
-            'category_id' => 'required|exists:categories,id',
-            'stock'       => 'required|integer|min:0',
-            'description' => 'nullable|string',
-            'image'       => 'nullable|image|max:2048',
+            'name'         => 'required|string|max:255',
+            'slug'         => 'required|string|max:255|unique:products,slug,' . $product->id,
+            'description'  => 'nullable|string',
+            'category_id'  => 'required|exists:categories,id',
+            'brand_id'     => 'required|exists:brands,id',
+            'price'        => 'required|numeric|min:0',
+            'price2'       => 'nullable|numeric|min:0',
+            'stock'        => 'required|integer|min:0',
+            'status'       => 'required|in:active,inactive',
+            'image'        => 'nullable|image|max:5120',
         ]);
 
-         $data['slug'] = Str::slug($data['name']);
+        // 2) Asignar campos
+        $product->name        = $data['name'];
+        $product->slug        = $data['slug'];
+        $product->description = $data['description'] ?? $product->description;
+        $product->category_id = $data['category_id'];
+        $product->brand_id    = $data['brand_id'];
+        $product->price       = $data['price'];
+        $product->price2      = $data['price2'] ?? $product->price2;
+        $product->stock       = $data['stock'];
+        $product->status      = $data['status'];
 
-        if ($request->hasFile('image')) {
-            // Borra imagen anterior si existe
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $data['image'] = $request->file('image')
-                                  ->store('products', 'public');
+        // 1) Generar el slug base
+    $baseSlug = Str::slug($data['name']);
+
+    // 2) Si cambió el nombre (o si quieres forzar el recálculo), buscamos un slug único
+    if ($baseSlug !== $product->slug) {
+        $slug    = $baseSlug;
+        $counter = 1;
+
+        // Mientras exista alguno distinto al producto actual, le añadimos sufijo
+        while (
+            Product::where('slug', $slug)
+                   ->where('id', '<>', $product->id)
+                   ->exists()
+        ) {
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
         }
 
-        $product->update($data);
+        $data['slug'] = $slug;
+    } else {
+        // Si el slug no cambió (por ejemplo no cambiaste el nombre), lo dejamos igual
+        $data['slug'] = $product->slug;
+    }
 
+        // 3) Si suben imagen, procesarla
+        if ($request->hasFile('image')) {
+            // (a) Borrar imagen anterior
+            if ($product->image && \Storage::disk('public')->exists($product->image)) {
+                \Storage::disk('public')->delete($product->image);
+            }
+            // (b) Guardar nueva imagen
+            $path = $request->file('image')->store('products', 'public');
+            $product->image = $path;
+        }
+
+        // 4) Guardar cambios
+        $product->save();
+
+        // 5) Redirigir con mensaje flash
         return redirect()
             ->route('admin.products.index')
             ->with('success', 'Producto actualizado correctamente.');
@@ -106,17 +152,24 @@ class ProductController extends Controller
 
 
 
-    public function destroy(Product $product)
-    {
-        if ($product->image) {
-            Storage::disk('public')->delete($product->image);
-        }
-        $product->delete();
 
-        return redirect()
-            ->route('admin.products.index')
-            ->with('success', 'Producto eliminado correctamente.');
+
+
+
+   public function destroy(Product $product)
+{
+    // Si existe imagen anterior, la borramos
+    if ($product->image && \Storage::disk('public')->exists($product->image)) {
+        \Storage::disk('public')->delete($product->image);
     }
+
+    $product->delete();
+
+    return redirect()
+        ->route('admin.products.index')
+        ->with('success', 'Producto eliminado correctamente.');
+}
+
 
 
     public function details($id, $slug)
